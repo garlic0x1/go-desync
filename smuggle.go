@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 )
@@ -50,10 +51,16 @@ func main() {
 		os.Setenv("HTTP_PROXY", proxy)
 	}
 
-	for _, u := range urls {
-		log.Println(u)
-		testTemplate(u, "template.txt")
-		testTemplate(u, "template2.txt")
-		testTemplate(u, "template3.txt")
+	files, err := ioutil.ReadDir("templates/")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+		for _, u := range urls {
+			filename := "templates/" + file.Name()
+			log.Println(u)
+			testTemplate(u, filename)
+		}
 	}
 }
