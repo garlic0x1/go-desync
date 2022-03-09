@@ -28,6 +28,8 @@ Usage of ./smuggler:
     	Set the Golang proxy, for example: http://example.com:8080
   -threads int
     	Number of concurrent targets to test (default 5)
+  -timeout int
+    	Timeout (default 10)
   -u string
     	Target URL
   -urls string
