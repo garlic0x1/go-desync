@@ -1,0 +1,45 @@
+package main
+
+import (
+	"bytes"
+	"log"
+	"net/url"
+	"regexp"
+	"text/template"
+)
+
+var LIMIT = 5
+
+func testTemplate(u string, templatefile string) {
+	parsed, err := url.Parse(u)
+	if err != nil {
+		log.Println("failed to parse url", u, err)
+	}
+	host := parsed.Host
+	path := parsed.Path
+
+	type tpl struct {
+		Host string
+		Path string
+	}
+	temp := template.Must(template.ParseFiles(templatefile))
+
+	var res bytes.Buffer
+	err = temp.Execute(&res, tpl{
+		Host: host,
+		Path: path,
+	})
+	reg := regexp.MustCompile(`\n`)
+
+	result := reg.ReplaceAllString(res.String(), "\r\n")
+
+	var headers []string
+	var bodies []string
+	for i := 0; i < LIMIT; i++ {
+		header, body := socketreq(host, result)
+		headers = append(headers, header)
+		bodies = append(bodies, body)
+	}
+
+	oracleCLTE(u, headers, bodies)
+}
