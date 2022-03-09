@@ -17,11 +17,13 @@ func main() {
 		urlsfile string
 		proxy    string
 		nthreads int
+		timeout  int
 	)
 
 	flag.StringVar(&uflag, "u", "", "Target URL")
 	flag.StringVar(&urlsfile, "urls", "", "List of URLs")
 	flag.IntVar(&nthreads, "threads", 5, "Number of concurrent targets to test")
+	flag.IntVar(&timeout, "timeout", 10, "Timeout")
 	flag.StringVar(&proxy, "proxy", "", "Set the Golang proxy, for example: http://example.com:8080")
 	flag.Parse()
 
@@ -70,11 +72,11 @@ func main() {
 				go func() {
 					defer wg.Done()
 					filename := "templates/" + file.Name()
-					testTemplate(u, filename)
+					testTemplate(u, filename, timeout)
 				}()
 			default:
 				filename := "templates/" + file.Name()
-				testTemplate(u, filename)
+				testTemplate(u, filename, timeout)
 			}
 		}
 		wg.Wait()

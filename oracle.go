@@ -6,7 +6,7 @@ import (
 )
 
 // given a slice of responses, determine if the site is vulnerable
-func oracleCLTE(u string, headers []string, bodies []string) {
+func oracleCLTE(u string, headers []string, bodies []string, payload string) {
 	isvuln := false
 
 	for _, body := range headers {
@@ -16,6 +16,6 @@ func oracleCLTE(u string, headers []string, bodies []string) {
 	}
 
 	if isvuln {
-		fmt.Println(u, "is vulnerable")
+		fmt.Println(u, "is vulnerable, payload: ", payload)
 	}
 }

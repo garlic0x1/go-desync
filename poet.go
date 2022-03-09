@@ -11,7 +11,7 @@ import (
 
 var LIMIT = 5
 
-func testTemplate(u string, templatefile string) {
+func testTemplate(u string, templatefile string, timeout int) {
 	parsed, err := url.Parse(u)
 	if err != nil {
 		log.Println("failed to parse url", u, err)
@@ -42,12 +42,12 @@ func testTemplate(u string, templatefile string) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			header, body := socketreq(host, result)
+			header, body := socketreq(host, result, timeout)
 			headers = append(headers, header)
 			bodies = append(bodies, body)
 		}()
 	}
 	wg.Wait()
 
-	oracleCLTE(u, headers, bodies)
+	oracleCLTE(u, headers, bodies, templatefile)
 }
