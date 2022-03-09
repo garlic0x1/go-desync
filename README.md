@@ -24,8 +24,10 @@ Usage:
 ```
 $ ./smuggler -h
 Usage of ./smuggler:
+  -header string
+    	Custom header to add to requests, example: '-header "User-Agent: garlic0x1"'
   -proxy string
-    	Set the Golang proxy, for example: http://example.com:8080
+    	Set the environment proxy, for example: http://example.com:8080
   -threads int
     	Number of concurrent targets to test (default 5)
   -timeout int
