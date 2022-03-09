@@ -26,11 +26,12 @@ $ ./smuggler -h
 Usage of ./smuggler:
   -proxy string
     	Set the Golang proxy, for example: http://example.com:8080
+  -threads int
+    	Number of concurrent targets to test (default 5)
   -u string
     	Target URL
   -urls string
     	List of URLs
-
 ```
 
 Example test on Portswigger labs:
