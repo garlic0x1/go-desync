@@ -1,5 +1,3 @@
-# Race conditions now fixed using channels
-
 # smuggler
 net/http makes it very challenging to send a request with malformed or duplicate headers. So for this application, it is more practical to parse a template and write it to a socket. This makes it simple to add your own payloads and may be useful for other things than request smuggling for ease of creating templates by copy/pasting from Burp.  
   
@@ -46,3 +44,6 @@ https://acbf1fa51ea928ebc0ae8934000800c3.web-security-academy.net/ is vulnerable
 https://acbf1fa51ea928ebc0ae8934000800c3.web-security-academy.net/ is vulnerable, payload: templates/template3.txt
 
 ```
+
+# todo
+Allow the oracle to read conditions from the template
