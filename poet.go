@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/url"
 	"regexp"
+	"sync"
 	"text/template"
 )
 
@@ -33,13 +34,20 @@ func testTemplate(u string, templatefile string) {
 
 	result := reg.ReplaceAllString(res.String(), "\r\n")
 
+	var wg sync.WaitGroup
+
 	var headers []string
 	var bodies []string
 	for i := 0; i < LIMIT; i++ {
-		header, body := socketreq(host, result)
-		headers = append(headers, header)
-		bodies = append(bodies, body)
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			header, body := socketreq(host, result)
+			headers = append(headers, header)
+			bodies = append(bodies, body)
+		}()
 	}
+	wg.Wait()
 
 	oracleCLTE(u, headers, bodies)
 }
