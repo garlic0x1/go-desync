@@ -10,21 +10,28 @@ import (
 	"sync"
 )
 
+var (
+	USECUSTOM    = false
+	CUSTOMHEADER = ""
+)
+
 func main() {
 	var (
-		uflag    string
-		urls     []string
-		urlsfile string
-		proxy    string
-		nthreads int
-		timeout  int
+		uflag        string
+		urls         []string
+		urlsfile     string
+		proxy        string
+		nthreads     int
+		timeout      int
+		customheader string
 	)
 
 	flag.StringVar(&uflag, "u", "", "Target URL")
 	flag.StringVar(&urlsfile, "urls", "", "List of URLs")
+	flag.StringVar(&customheader, "header", "", "Custom header to add to requests, example: '-header \"User-Agent: garlic0x1\"'")
 	flag.IntVar(&nthreads, "threads", 5, "Number of concurrent targets to test")
 	flag.IntVar(&timeout, "timeout", 10, "Timeout")
-	flag.StringVar(&proxy, "proxy", "", "Set the Golang proxy, for example: http://example.com:8080")
+	flag.StringVar(&proxy, "proxy", "", "Set the environment proxy, for example: http://example.com:8080")
 	flag.Parse()
 
 	// get urls from flags
@@ -54,6 +61,11 @@ func main() {
 	if proxy != "" {
 		fmt.Println("Setting up proxy at", proxy)
 		os.Setenv("HTTP_PROXY", proxy)
+	}
+
+	if customheader != "" {
+		CUSTOMHEADER = customheader
+		USECUSTOM = true
 	}
 
 	// get templates from folder

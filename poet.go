@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/url"
 	"regexp"
+	"strings"
 	"text/template"
 )
 
@@ -36,6 +37,11 @@ func testTemplate(u string, templatefile string, timeout int) {
 	reg := regexp.MustCompile(`\n`)
 	result := reg.ReplaceAllString(res.String(), "\r\n")
 
+	// insert custom header if needed
+	if USECUSTOM {
+		result = insertHeader(result, CUSTOMHEADER)
+	}
+
 	// make a type for the channel to use
 	type response struct {
 		Header string
@@ -66,4 +72,17 @@ func testTemplate(u string, templatefile string, timeout int) {
 	}
 	// send to oracle
 	oracleCLTE(u, headers, bodies, templatefile)
+}
+
+func insertHeader(message string, header string) string {
+	lines := strings.Split(message, "\n")
+	result := ""
+	for i := 0; i < len(lines); i++ {
+		result = result + lines[i] + "\n"
+		if i == 1 {
+			result = result + header + "\r\n"
+		}
+	}
+	log.Println(result)
+	return result
 }
