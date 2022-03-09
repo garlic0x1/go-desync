@@ -1,4 +1,4 @@
-module smuggler
+module github.com/garlic0x1/smuggler
 
 go 1.17
 
