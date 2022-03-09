@@ -1,6 +1,7 @@
 # smuggler
-A tool for detecting HTTP request smuggling vulnerabilities  
-net/http makes it very challenging to send a request with malformed or duplicate headers. So for this application, it is more practical to parse a template and write it to a socket. This makes it easy to add your own payloads and may be useful for other things than request smuggling for ease of creating templates by copy/pasting from Burp.
+net/http makes it very challenging to send a request with malformed or duplicate headers. So for this application, it is more practical to parse a template and write it to a socket. This makes it simple to add your own payloads and may be useful for other things than request smuggling for ease of creating templates by copy/pasting from Burp.  
+  
+I took some ideas from this article https://www.synopsys.com/blogs/software-security/fuzzing-test-cases-not-all-random/ about the structure of the program. Separating the application into distinct sections being poet, courier, and oracle help make the code more reusable.
 
 
 
