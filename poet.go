@@ -5,12 +5,12 @@ import (
 	"log"
 	"net/url"
 	"regexp"
-	"sync"
 	"text/template"
 )
 
 var LIMIT = 5
 
+// sends LIMIT requests to u with specified template
 func testTemplate(u string, templatefile string, timeout int) {
 	parsed, err := url.Parse(u)
 	if err != nil {
@@ -19,6 +19,7 @@ func testTemplate(u string, templatefile string, timeout int) {
 	host := parsed.Host
 	path := parsed.Path
 
+	// template stuff
 	type tpl struct {
 		Host string
 		Path string
@@ -30,24 +31,39 @@ func testTemplate(u string, templatefile string, timeout int) {
 		Host: host,
 		Path: path,
 	})
-	reg := regexp.MustCompile(`\n`)
 
+	// replace newlines with \r\n
+	reg := regexp.MustCompile(`\n`)
 	result := reg.ReplaceAllString(res.String(), "\r\n")
 
-	var wg sync.WaitGroup
+	// make a type for the channel to use
+	type response struct {
+		Header string
+		Body   string
+	}
+
+	// do all the requests concurrently for best chance of success
+	// listen on a channel instead of using a waitgroup to prevent race conditions
+	c := make(chan response)
 
 	var headers []string
 	var bodies []string
 	for i := 0; i < LIMIT; i++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		go func(host string, result string, timeout int, c chan response) {
 			header, body := socketreq(host, result, timeout)
-			headers = append(headers, header)
-			bodies = append(bodies, body)
-		}()
+			c <- response{
+				Header: header,
+				Body:   body,
+			}
+		}(host, result, timeout, c)
 	}
-	wg.Wait()
 
+	// listen for responses
+	for i := 0; i < LIMIT; i++ {
+		respStruct := <-c
+		headers = append(headers, respStruct.Header)
+		bodies = append(bodies, respStruct.Body)
+	}
+	// send to oracle
 	oracleCLTE(u, headers, bodies, templatefile)
 }

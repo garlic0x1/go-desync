@@ -16,6 +16,6 @@ func oracleCLTE(u string, headers []string, bodies []string, payload string) {
 	}
 
 	if isvuln {
-		fmt.Println(u, "is vulnerable, payload: ", payload)
+		fmt.Println(u, "is vulnerable, payload:", payload)
 	}
 }

@@ -56,26 +56,28 @@ func main() {
 		os.Setenv("HTTP_PROXY", proxy)
 	}
 
+	// get templates from folder
 	files, err := ioutil.ReadDir("templates/")
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// limit concurrency
 	sem := make(chan struct{}, nthreads)
 	var wg sync.WaitGroup
 
 	for _, file := range files {
+		filename := "templates/" + file.Name()
+		// targets looped inside templates to distribute load
 		for _, u := range urls {
 			select {
 			case sem <- struct{}{}:
 				wg.Add(1)
-				go func() {
+				go func(u string, filename string, timeout int) {
 					defer wg.Done()
-					filename := "templates/" + file.Name()
 					testTemplate(u, filename, timeout)
-				}()
+				}(u, filename, timeout)
 			default:
-				filename := "templates/" + file.Name()
 				testTemplate(u, filename, timeout)
 			}
 		}
