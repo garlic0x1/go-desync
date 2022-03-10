@@ -20,6 +20,7 @@ func main() {
 		uflag    string
 		urls     []string
 		urlsfile string
+		tempdir  string
 		proxy    string
 		nthreads int
 		timeout  int
@@ -27,6 +28,7 @@ func main() {
 
 	flag.StringVar(&uflag, "u", "", "Target URL")
 	flag.StringVar(&urlsfile, "urls", "", "List of URLs")
+	flag.StringVar(&tempdir, "templates", "templates/", "Directory of YAML templates to test")
 	flag.StringVar(&CUSTOMHEADER, "header", "", "Custom header to add to requests, example: '-header \"User-Agent: garlic0x1\"'")
 	flag.IntVar(&LIMIT, "tries", 5, "Number of requests to send to test each template")
 	flag.IntVar(&nthreads, "threads", 5, "Number of concurrent targets to test")
@@ -68,7 +70,7 @@ func main() {
 	}
 
 	// get templates from folder
-	files, err := ioutil.ReadDir("templates/")
+	files, err := ioutil.ReadDir(tempdir)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -85,7 +87,7 @@ func main() {
 	}
 
 	for _, file := range files {
-		filename := "templates/" + file.Name()
+		filename := tempdir + file.Name()
 
 		c := make(chan response)
 
