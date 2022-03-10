@@ -36,7 +36,7 @@ Usage of ./smuggler:
   -proxy string
     	Set the environment proxy, for example: http://example.com:8080
   -templates string
-    	Directory of yaml templates to test (default "templates/")
+    	Directory of YAML templates to test (default "templates/")
   -threads int
     	Number of concurrent targets to test (default 5)
   -timeout int
