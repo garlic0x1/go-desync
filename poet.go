@@ -34,7 +34,7 @@ func testTemplate(u string, templatefile string, timeout int) ([]string, []strin
 	})
 
 	// replace newlines with \r\n
-	reg := regexp.MustCompile(`\n`)
+	reg := regexp.MustCompile("\n")
 	result := reg.ReplaceAllString(res.String(), "\r\n")
 
 	// insert custom header if needed
