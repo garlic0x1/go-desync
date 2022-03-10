@@ -7,7 +7,7 @@ I took some ideas from this article https://www.synopsys.com/blogs/software-secu
 
 Example template:
 ```
-Match: GPOST
+Match: Unrecognized method GPOST
 Request: |+
   POST {{.Path}} HTTP/1.1
   Host: {{.Host}}
@@ -15,15 +15,15 @@ Request: |+
   Content-length: 4
   Transfer-Encoding: chunked
   Transfer-encoding: cow
-  
+
   5c
   GPOST / HTTP/1.1
   Content-Type: application/x-www-form-urlencoded
   Content-Length: 15
-  
+
   x=1
   0
-  
+
 
 ```
 
