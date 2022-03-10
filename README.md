@@ -39,6 +39,8 @@ Usage of ./smuggler:
     	Number of concurrent targets to test (default 5)
   -timeout int
     	Timeout (default 10)
+  -tries int
+    	Number of requests to send to test each template (default 5)
   -u string
     	Target URL
   -urls string
