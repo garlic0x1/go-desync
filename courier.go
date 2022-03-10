@@ -32,7 +32,7 @@ func socketreq(host string, message string, timeout int) (string, string) {
 			log.Fatalf(fmt.Sprintf("client: dial: %s:443", host), err)
 		}
 		defer conn.Close()
-		conn.SetReadDeadline(time.Now().Add(time.Duration(timeout) * time.Second))
+		//conn.SetReadDeadline(time.Now().Add(time.Duration(timeout) * time.Second))
 
 		// connection complete, now write the message
 
