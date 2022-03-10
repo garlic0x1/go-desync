@@ -35,6 +35,8 @@ Usage of ./smuggler:
     	Custom header to add to requests, example: '-header "User-Agent: garlic0x1"'
   -proxy string
     	Set the environment proxy, for example: http://example.com:8080
+  -templates string
+    	Directory of yaml templates to test (default "templates/")
   -threads int
     	Number of concurrent targets to test (default 5)
   -timeout int
