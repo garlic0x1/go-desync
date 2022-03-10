@@ -1,13 +1,17 @@
-Match: GPOST
+Match: 404
 Request: |+
   POST {{.Path}} HTTP/1.1
   Host: {{.Host}}
-  Connection: keep-alive
   Content-Type: application/x-www-form-urlencoded
-  Content-Length: 6
+  Content-length: 4
   Transfer-Encoding: chunked
-  
+
+  5e
+  POST /404 HTTP/1.1
+  Content-Type: application/x-www-form-urlencoded
+  Content-Length: 15
+
+  x=1
   0
-  
-  G
-  
+
+
