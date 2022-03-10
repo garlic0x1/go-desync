@@ -25,7 +25,11 @@ func testTemplate(u string, templatefile string, timeout int) {
 		Host string
 		Path string
 	}
-	temp := template.Must(template.ParseFiles(templatefile))
+	//temp := template.Must(template.Parse(parseRequest(templatefile)))
+	//temp := template.Must(template.ParseFiles(templatefile))
+
+	// get the request out of the yaml file
+	temp, err := template.New("request").Parse(parseRequest(templatefile))
 
 	var res bytes.Buffer
 	err = temp.Execute(&res, tpl{
@@ -36,6 +40,7 @@ func testTemplate(u string, templatefile string, timeout int) {
 	// replace newlines with \r\n
 	reg := regexp.MustCompile(`\n`)
 	result := reg.ReplaceAllString(res.String(), "\r\n")
+	//fmt.Println(result)
 
 	// insert custom header if needed
 	if USECUSTOM {
