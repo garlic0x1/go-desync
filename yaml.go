@@ -27,7 +27,7 @@ func parseRequest(file string) string {
 	return data["Request"]
 }
 
-func parseOracle(file string) string {
+func parseMatcher(file string) string {
 	yfile, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
@@ -39,5 +39,5 @@ func parseOracle(file string) string {
 		log.Fatal(err)
 	}
 
-	return data["Oracle"]
+	return data["Match"]
 }

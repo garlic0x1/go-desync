@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"net/url"
 	"regexp"
@@ -40,7 +41,7 @@ func testTemplate(u string, templatefile string, timeout int) {
 	// replace newlines with \r\n
 	reg := regexp.MustCompile(`\n`)
 	result := reg.ReplaceAllString(res.String(), "\r\n")
-	//fmt.Println(result)
+	fmt.Println(result)
 
 	// insert custom header if needed
 	if USECUSTOM {

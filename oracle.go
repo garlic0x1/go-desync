@@ -11,14 +11,9 @@ func oracleCLTE(u string, headers []string, bodies []string, payload string) {
 
 	var matcher = ""
 
-	args := parseOracle(payload)
-	rows := strings.Split(args, "\n")
-	for i := 0; i < len(rows); i++ {
-		words := strings.SplitN(rows[i], " ", 1)
-		if words[0] == "match" {
-			matcher = words[1]
-		}
-	}
+	matcher = parseMatcher(payload)
+
+	fmt.Println(matcher)
 
 	for _, body := range headers {
 		if strings.Contains(body, matcher) {
