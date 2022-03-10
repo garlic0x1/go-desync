@@ -1,4 +1,4 @@
-Match: GPOST
+Match: Unrecognized method GPOST
 Request: |+
   POST {{.Path}} HTTP/1.1
   Host: {{.Host}}
