@@ -18,6 +18,11 @@ func testTemplate(u string, templatefile string, timeout int) ([]string, []strin
 	host := parsed.Host
 	path := parsed.Path
 
+	// standardize path for urls with no /
+	if path == "" {
+		path = "/"
+	}
+
 	// template stuff
 	type tpl struct {
 		Host string
