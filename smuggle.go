@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	LIMIT        = 5
 	USECUSTOM    = false
 	CUSTOMHEADER = ""
 )
@@ -27,6 +28,7 @@ func main() {
 	flag.StringVar(&uflag, "u", "", "Target URL")
 	flag.StringVar(&urlsfile, "urls", "", "List of URLs")
 	flag.StringVar(&CUSTOMHEADER, "header", "", "Custom header to add to requests, example: '-header \"User-Agent: garlic0x1\"'")
+	flag.IntVar(&LIMIT, "tries", 5, "Number of requests to send to test each template")
 	flag.IntVar(&nthreads, "threads", 5, "Number of concurrent targets to test")
 	flag.IntVar(&timeout, "timeout", 10, "Timeout")
 	flag.StringVar(&proxy, "proxy", "", "Set the environment proxy, for example: http://example.com:8080")

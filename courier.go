@@ -32,10 +32,8 @@ func socketreq(host string, message string, timeout int) (string, string) {
 			log.Fatalf(fmt.Sprintf("client: dial: %s:443", host), err)
 		}
 		defer conn.Close()
-		//conn.SetReadDeadline(time.Now().Add(time.Duration(timeout) * time.Second))
 
 		// connection complete, now write the message
-
 		_, err = io.WriteString(conn, message)
 		if err != nil {
 			log.Fatalf("client: write: %s", err)
@@ -45,6 +43,7 @@ func socketreq(host string, message string, timeout int) (string, string) {
 		// read response
 
 		/* this would be preffered method but isnt working with tls
+		// might be able to use it later if needed to clear out socket
 		res, err := ioutil.ReadAll(conn)
 		if err != nil {
 			log.Println("Error reading response", err)
@@ -76,9 +75,9 @@ func socketreq(host string, message string, timeout int) (string, string) {
 		}
 	}()
 
+	// listen to timer and response, whichever happens first
 	select {
 	case res := <-c1:
-		//	fmt.Println(res.Headers)
 		return res.Headers, res.Body
 	case <-time.After(time.Duration(timeout) * time.Second):
 		return "", ""

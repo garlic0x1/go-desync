@@ -9,8 +9,6 @@ import (
 	"text/template"
 )
 
-var LIMIT = 5
-
 // sends LIMIT requests to u with specified template
 func testTemplate(u string, templatefile string, timeout int) ([]string, []string) {
 	parsed, err := url.Parse(u)
