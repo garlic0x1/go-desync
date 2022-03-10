@@ -16,18 +16,17 @@ var (
 
 func main() {
 	var (
-		uflag        string
-		urls         []string
-		urlsfile     string
-		proxy        string
-		nthreads     int
-		timeout      int
-		customheader string
+		uflag    string
+		urls     []string
+		urlsfile string
+		proxy    string
+		nthreads int
+		timeout  int
 	)
 
 	flag.StringVar(&uflag, "u", "", "Target URL")
 	flag.StringVar(&urlsfile, "urls", "", "List of URLs")
-	flag.StringVar(&customheader, "header", "", "Custom header to add to requests, example: '-header \"User-Agent: garlic0x1\"'")
+	flag.StringVar(&CUSTOMHEADER, "header", "", "Custom header to add to requests, example: '-header \"User-Agent: garlic0x1\"'")
 	flag.IntVar(&nthreads, "threads", 5, "Number of concurrent targets to test")
 	flag.IntVar(&timeout, "timeout", 10, "Timeout")
 	flag.StringVar(&proxy, "proxy", "", "Set the environment proxy, for example: http://example.com:8080")
@@ -62,8 +61,7 @@ func main() {
 		os.Setenv("HTTP_PROXY", proxy)
 	}
 
-	if customheader != "" {
-		CUSTOMHEADER = customheader
+	if CUSTOMHEADER != "" {
 		USECUSTOM = true
 	}
 
