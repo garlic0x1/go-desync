@@ -12,7 +12,7 @@ import (
 var LIMIT = 5
 
 // sends LIMIT requests to u with specified template
-func testTemplate(u string, templatefile string, timeout int) {
+func testTemplate(u string, templatefile string, timeout int) ([]string, []string) {
 	parsed, err := url.Parse(u)
 	if err != nil {
 		log.Println("failed to parse url", u, err)
@@ -25,8 +25,6 @@ func testTemplate(u string, templatefile string, timeout int) {
 		Host string
 		Path string
 	}
-	//temp := template.Must(template.Parse(parseRequest(templatefile)))
-	//temp := template.Must(template.ParseFiles(templatefile))
 
 	// get the request out of the yaml file
 	temp, err := template.New("request").Parse(parseRequest(templatefile))
@@ -40,7 +38,6 @@ func testTemplate(u string, templatefile string, timeout int) {
 	// replace newlines with \r\n
 	reg := regexp.MustCompile(`\n`)
 	result := reg.ReplaceAllString(res.String(), "\r\n")
-	//fmt.Println(result)
 
 	// insert custom header if needed
 	if USECUSTOM {
@@ -75,8 +72,9 @@ func testTemplate(u string, templatefile string, timeout int) {
 		headers = append(headers, respStruct.Header)
 		bodies = append(bodies, respStruct.Body)
 	}
-	// send to oracle
-	oracleCLTE(u, headers, bodies, templatefile)
+
+	// return results
+	return headers, bodies
 }
 
 func insertHeader(message string, header string) string {

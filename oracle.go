@@ -6,7 +6,7 @@ import (
 )
 
 // given a slice of responses, determine if the site is vulnerable
-func oracleCLTE(u string, headers []string, bodies []string, payload string) {
+func oracle(u string, headers []string, bodies []string, payload string) {
 	isvuln := false
 
 	var matcher = ""

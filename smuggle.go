@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"sync"
 )
 
 var (
@@ -76,23 +75,43 @@ func main() {
 
 	// limit concurrency
 	sem := make(chan struct{}, nthreads)
-	var wg sync.WaitGroup
+
+	// creat type for channel
+	type response struct {
+		URL      string
+		Headers  []string
+		Bodies   []string
+		Template string
+	}
 
 	for _, file := range files {
 		filename := "templates/" + file.Name()
+
+		c := make(chan response)
+
 		// targets looped inside templates to distribute load
 		for _, u := range urls {
 			select {
 			case sem <- struct{}{}:
-				wg.Add(1)
 				go func(u string, filename string, timeout int) {
-					defer wg.Done()
-					testTemplate(u, filename, timeout)
+					headers, bodies := testTemplate(u, filename, timeout)
+					c <- response{
+						URL:      u,
+						Headers:  headers,
+						Bodies:   bodies,
+						Template: filename,
+					}
+					<-sem
 				}(u, filename, timeout)
 			default:
 				testTemplate(u, filename, timeout)
 			}
 		}
-		wg.Wait()
+
+		// listen for responses
+		for _, _ = range urls {
+			respStruct := <-c
+			oracle(respStruct.URL, respStruct.Headers, respStruct.Bodies, respStruct.Template)
+		}
 	}
 }
