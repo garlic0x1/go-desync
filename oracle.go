@@ -13,9 +13,13 @@ func oracleCLTE(u string, headers []string, bodies []string, payload string) {
 
 	matcher = parseMatcher(payload)
 
-	fmt.Println(matcher)
-
-	for _, body := range headers {
+	for _, header := range headers {
+		fmt.Println(header)
+		if strings.Contains(header, matcher) {
+			isvuln = true
+		}
+	}
+	for _, body := range bodies {
 		if strings.Contains(body, matcher) {
 			isvuln = true
 		}
