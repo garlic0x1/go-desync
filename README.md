@@ -51,9 +51,9 @@ Usage of ./smuggler:
 
 Example test on Portswigger labs:
 ```
-$ ./smuggler -urls targets.test
-https://ace51fd41fcbfab0c03e376f00890063.web-security-academy.net/ is vulnerable, payload: templates/template.txt
-https://acbf1fa51ea928ebc0ae8934000800c3.web-security-academy.net/ is vulnerable, payload: templates/template2.txt
-https://acbf1fa51ea928ebc0ae8934000800c3.web-security-academy.net/ is vulnerable, payload: templates/template3.txt
-
+$ ./smuggler -urls targets.test 
+https://ace01f7b1ead19f2c0064c7300d500e6.web-security-academy.net/ is vulnerable, payload: templates/clte.yaml
+https://ace01f7b1ead19f2c0064c7300d500e6.web-security-academy.net/ is vulnerable, payload: templates/diffclte.yaml
+https://accb1f2b1ff036edc0495a6d00cf00be.web-security-academy.net/ is vulnerable, payload: templates/obfuscateTE.yaml
+https://accb1f2b1ff036edc0495a6d00cf00be.web-security-academy.net/ is vulnerable, payload: templates/tecl.yaml
 ```
