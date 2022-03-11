@@ -80,7 +80,7 @@ func socketreq(host string, message string, timeout int) (string, string) {
 	case res := <-c1:
 		return res.Headers, res.Body
 	case <-time.After(time.Duration(timeout) * time.Second):
-		return "", ""
+		return "[TIMEOUT]", "[TIMEOUT]"
 	}
 	return "", ""
 }

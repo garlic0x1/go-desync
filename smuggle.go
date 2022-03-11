@@ -97,12 +97,15 @@ func main() {
 			case sem <- struct{}{}:
 				go func(u string, filename string, timeout int) {
 					headers, bodies := testTemplate(u, filename, timeout)
+
+					// the listener loop will already be running, so responding to c will be immediate
 					c <- response{
 						URL:      u,
 						Headers:  headers,
 						Bodies:   bodies,
 						Template: filename,
 					}
+					// add to the count of routines
 					<-sem
 				}(u, filename, timeout)
 			default:
