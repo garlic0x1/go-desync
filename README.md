@@ -29,7 +29,7 @@ Request: |+
 
 Usage:
 ```
-$ ./smuggler -h
+$ go-desync -h
 Usage of ./smuggler:
   -header string
     	Custom header to add to requests, example: '-header "User-Agent: garlic0x1"'
