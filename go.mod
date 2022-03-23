@@ -1,4 +1,4 @@
-module github.com/garlic0x1/smuggler
+module github.com/garlic0x1/go-desync
 
 go 1.17
 
