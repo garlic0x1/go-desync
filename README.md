@@ -30,7 +30,7 @@ Request: |+
 Usage:
 ```
 $ go-desync -h
-Usage of ./smuggler:
+Usage of go-desync:
   -header string
     	Custom header to add to requests, example: '-header "User-Agent: garlic0x1"'
   -proxy string
